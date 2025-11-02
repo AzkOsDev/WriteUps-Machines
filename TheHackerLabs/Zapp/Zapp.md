@@ -60,8 +60,7 @@ Si nos vamos al codigo fuente de la pagina podemos observar un div extraño que 
 ![Web_Back](Screnshots/back.png)
 
 
-Decodificamos este codigo pero nos vuelve a dar un codigo en base64 asi que lo volvemos a pasar y lo mismo hasta un total de 4 veces, asi hasta que nos de la palabra
-Nos da la palabra **cuatrocuatroveces** posible contraseña? seguiremos buscando.
+Decodificamos este codigo pero nos vuelve a dar un codigo en base64 asi que lo volvemos a pasar y lo mismo hasta un total de 4 veces, asi hasta que nos de la palabra  **cuatrocuatroveces** posible contraseña? seguiremos buscando.
 
 ![bs64](Screnshots/base64.png)
 Despues de esto trato de hacer un fuzzing de directorios con la herramienta **gobuster** para ver que mas podiamos encontrar, encontramos una ruta llamada **/pass.txt**
