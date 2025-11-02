@@ -66,6 +66,8 @@ Decodificamos este codigo pero nos vuelve a dar un codigo en base64 asi que lo v
 Despues de esto trato de hacer un fuzzing de directorios con la herramienta **gobuster** para ver que mas podiamos encontrar, encontramos una ruta llamada **/pass.txt**
 pero viendo el tamaño del size si vamos dentro de ella no encontramos nada, se encuentra vacio 
 
+![buster](Screnshots/gobuster.png)
+
 Despues de un largo tiempo de tratar con hydra y con fuerza bruta y nada me daba, hasta que decidi coger el base64 que decodificamos con anterioridad y ponerlo como ruta y bingo
 
 ![page](Screnshots/cuatroveces.png)
