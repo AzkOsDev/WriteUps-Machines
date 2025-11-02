@@ -21,7 +21,7 @@ La máquina Zapp tiene la ip **192.168.1.130**
 Comenzamos con lo mas basico realizando un PING a la maquina para identificar que la maquina se encuentre con conexion.
 
 
-![allPorts](screenshots/allPorts.png)
+![ping](Screnshots/ping.png)
 
 Seguido de esto realizamos un escaneo con la herramienta **NMAP**. Para descubrir que puertos se encuentran abiertos dentro de la maquina.
 Usamos el siguiente comando
@@ -29,7 +29,7 @@ Usamos el siguiente comando
 sudo nmap -sS -Pn -n -p- -sVC --min-rate 5000 192.168.1.130 -oN allports
 ```
 
-![target](screenshots/target.png)
+![ping](Screnshots/nmap.png)
 
 - El puerto 21 está ejecutando un servicio de vsftpd con una version 2.0.8.
 - El puerto 22 está ejecutando un servicio de OpenSSH.  
@@ -39,10 +39,11 @@ sudo nmap -sS -Pn -n -p- -sVC --min-rate 5000 192.168.1.130 -oN allports
 
 Si nos damos cuenta el escaneo de nmap nos da como resultado que el puerto 21 se encuentra habilitado el login como anonymous y que dentro de esta se encuentran 2 archivos **secret.txt**, **login.txt**
 
-![home-80](screenshots/home-80.png)
+![ping](Screnshots/ftp.png)
 
 si vemos los dos archivos dentro nos muestra lo siguiente:
 
+![ping](Screnshots/archivos.png)
 
 el secret por lo que veo nos quiere decir algo como "Ojo con el cafe bien preparado, A veces la pista esta en la taza"
 y el login nos muestra posibles usuarios o contraseñas no lo sabemos
@@ -51,32 +52,28 @@ y el login nos muestra posibles usuarios o contraseñas no lo sabemos
 
 Si accedemos al sitio web desde el navegador podemos observar lo siguiente.
 
-![home-80](screenshots/home-80.png)
+![web](Screnshots/web.png)
 
 Si nos vamos al codigo fuente de la pagina podemos observar un div extraño que parese codificado en base64.
  
 
-![fuzzing](screenshots/fuzzing.png)
-
+![Web_Back](Screnshots/back.png)
 
 
 Decodificamos este codigo pero nos vuelve a dar un codigo en base64 asi que lo volvemos a pasar y lo mismo hasta un total de 4 veces, asi hasta que nos de la palabra
 Nos da la palabra **cuatrocuatroveces** posible contraseña? seguiremos buscando.
 
-![login](screenshots/login.png)
-
+![bs64](Screnshots/base64.png)
 Despues de esto trato de hacer un fuzzing de directorios con la herramienta **gobuster** para ver que mas podiamos encontrar, encontramos una ruta llamada **/pass.txt**
 pero viendo el tamaño del size si vamos dentro de ella no encontramos nada, se encuentra vacio 
 
-![login-fuzzing](screenshots/login-fuzzing.png)
-
 Despues de un largo tiempo de tratar con hydra y con fuerza bruta y nada me daba, hasta que decidi coger el base64 que decodificamos con anterioridad y ponerlo como ruta y bingo
 
-![home-80](screenshots/home-80.png)
+![page](Screnshots/cuatroveces.png)
 
 Dentro de este se encuentra una posible credencial de acceso y si tratamos de descomprimir nos pide claramente una password asi que para esto usaremos la herramienta **john**
 
-![home-80](screenshots/home-80.png)
+![john](Screnshots/john.png)
 
 Despues de un rato encontramos la contraseña asi que descomprimimos el archivo y nos da una posible contraseña **3spuM4**, y un mensaje que nos dice intenta porbar con mas.
 
@@ -84,7 +81,7 @@ Despues de un rato encontramos la contraseña asi que descomprimimos el archivo 
 
 trate de hacer fuerza bruta con los archivos que nos dieron por el puerto ftp pero nada me daba haci que decidi buscar detenidamente por la web y en el titulo tenia un posible username **zappskred**, asi que probamos estas credenciales y estamos dentro.
 
-![home-80](screenshots/home-80.png)
+![ssh](Screnshots/ssh.png)
 
 
 ## Escalada de Privilegios
@@ -93,4 +90,4 @@ La escalada de privilegios fue bastante sencilla lo unico que hicimos fue ingres
 
 asi que simplemente solo ejecutamos el siguiente comando para lanzarnos una zsh **sudo /usr/bin/zsh** y ya estaremos como root
 
-![home-80](screenshots/home-80.png)
+![root](Screnshots/root.png)
